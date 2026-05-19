@@ -83,7 +83,7 @@ function initBackToTop() {
 /* ---------- Scroll Animations ---------- */
 function initScrollAnimations() {
   const elements = document.querySelectorAll(
-    '.service-card, .benefit, .about__content, .about__image-wrapper, .contact__info, .contact__form-wrapper'
+    '.service-card, .pricing-card, .schedule-card, .about__content, .about__image-wrapper, .contact__info, .contact__form-wrapper'
   );
 
   elements.forEach(el => el.classList.add('fade-in'));
@@ -141,15 +141,17 @@ function initContactForm() {
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const service = document.getElementById('service').value;
+    const sessionType = document.getElementById('session-type').value;
     const message = document.getElementById('message').value.trim();
 
     let whatsappMessage = `Hola Flor! Soy ${name}.%0A`;
     whatsappMessage += `Me gustaría consultar por: ${getServiceName(service)}.%0A`;
+    if (sessionType) whatsappMessage += `Duración: ${getSessionName(sessionType)}%0A`;
     if (phone) whatsappMessage += `Mi teléfono: ${phone}%0A`;
     if (message) whatsappMessage += `${message}`;
 
     // Redirect to WhatsApp
-    window.open(`https://wa.me/5491100000000?text=${whatsappMessage}`, '_blank');
+    window.open(`https://wa.me/59891910970?text=${whatsappMessage}`, '_blank');
 
     form.reset();
     showNotification('¡Mensaje enviado! Te redirigimos a WhatsApp.');
@@ -160,12 +162,17 @@ function getServiceName(value) {
   const services = {
     relajante: 'Masaje Relajante',
     descontracturante: 'Descontracturante',
-    drenaje: 'Drenaje Linfático',
-    piedras: 'Piedras Calientes',
-    reflexologia: 'Reflexología',
-    deportivo: 'Masaje Deportivo',
+    integral: 'Masaje Integral',
   };
   return services[value] || value;
+}
+
+function getSessionName(value) {
+  const sessions = {
+    '30min': '30 min - Solo espalda ($1200)',
+    '45min': '45 min - Cuerpo completo ($2000)',
+  };
+  return sessions[value] || value;
 }
 
 /* ---------- Notification ---------- */
